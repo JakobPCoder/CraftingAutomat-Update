@@ -1,5 +1,5 @@
 package lolcroc.craftingautomat;
-
+/*
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -24,3 +24,4 @@ public class CraftingAutomatJEIPlugin implements IModPlugin {
         registration.addRecipeClickArea(CraftingAutomatScreen.class, 88, 32, 28, 23, RecipeTypes.CRAFTING);
     }
 }
+*/

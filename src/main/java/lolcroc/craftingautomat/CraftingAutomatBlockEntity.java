@@ -50,7 +50,6 @@ public class CraftingAutomatBlockEntity extends BlockEntity implements MenuProvi
 
     protected Component customName;
     protected LockCode lock = LockCode.NO_LOCK;
-
     protected StackedContents itemHelper = new StackedContents();
     protected Optional<CraftingRecipe> recipeUsed = Optional.empty();
     protected int ticksActive;
@@ -101,7 +100,7 @@ public class CraftingAutomatBlockEntity extends BlockEntity implements MenuProvi
         }
     }
 
-    private CraftingFlag craftingFlag = CraftingFlag.NONE;
+    public CraftingFlag craftingFlag = CraftingFlag.NONE;
     protected DataSlot craftingFlagHolder = new DataSlot() {
         @Override
         public int get() {

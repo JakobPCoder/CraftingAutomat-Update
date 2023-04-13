@@ -10,8 +10,13 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 public class CraftingAutomatMenu extends AbstractContainerMenu {
 
@@ -26,19 +31,25 @@ public class CraftingAutomatMenu extends AbstractContainerMenu {
         super(CraftingAutomat.AUTOCRAFTER_MENU.get(), id);
         automatEntity = be;
 
+
+        Optional<IItemHandlerModifiable> resultHandler = be.resultHandler.resolve();
+        Optional<IItemHandlerModifiable> matrixHandler = be.matrixHandler.resolve();
+        Optional<IItemHandlerModifiable> bufferHandler = be.bufferHandler.resolve();
+
+
         // Result slot
-        addSlot(new CraftingAutomatResultSlot(be.result, playerInventory.player, be, 0, 124, 35));
+        addSlot(new CraftingAutomatResultSlot(resultHandler.get(), playerInventory.player, be, 0, 124, 35));
 
         // Crafting matrix
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                addSlot(new BetterSlotItemHandler(be.matrix, j + i * 3, 30 + j * 18, 17 + i * 18));
+                addSlot(new BetterSlotItemHandler((ItemHandlers.Unsafe)(matrixHandler.get()), j + i * 3, 30 + j * 18, 17 + i * 18));
             }
         }
         
         // Crafting buffer
         for (int l = 0; l < 9; ++l) {
-            addSlot(new BetterSlotItemHandler(be.buffer, l, 8 + l * 18, 84));
+            addSlot(new BetterSlotItemHandler((ItemHandlers.Unsafe)(bufferHandler.get()), l, 8 + l * 18, 84));
         }
 
         // Player inventory
@@ -53,13 +64,14 @@ public class CraftingAutomatMenu extends AbstractContainerMenu {
             addSlot(new Slot(playerInventory, l, 8 + l * 18, 173));
         }
 
-        addDataSlots(be.dataAccess);
+        //addDataSlots(be.dataAccess);
     }
     
     @OnlyIn(Dist.CLIENT)
     public int getProgressWidth() {
         int ticks = automatEntity.ticksActive;
 
+        /*
         if (ticks <= 0) {
             return 0; // Easy return
         }
@@ -69,6 +81,9 @@ public class CraftingAutomatMenu extends AbstractContainerMenu {
         else {
             return ticks * 24 / automatEntity.crafingTicks;
         }
+         */
+
+        return 0;
     }
 
     @OnlyIn(Dist.CLIENT)
